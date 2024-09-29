@@ -42,6 +42,7 @@ namespace PasswordGenerator
             {
                 var worksheet = package.Workbook.Worksheets[0];
 
+                int total = 0;
                 for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
                 {
                     var username = worksheet.Cells[row, 1].Text;
@@ -49,7 +50,11 @@ namespace PasswordGenerator
 
                     var hashedPassword = await HashPasswordAsync(password);
                     results.Add(new UserResult { Username = username, Password = password, HashedPassword = hashedPassword });
+
+                    total++;
                 }
+
+                totalCount.Text = "Total Generated: " + total.ToString();
             }
 
             return results;

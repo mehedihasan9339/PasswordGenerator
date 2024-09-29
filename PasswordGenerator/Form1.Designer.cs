@@ -20,6 +20,7 @@
             btnDownload = new Button();
             dataGridViewResults = new DataGridView();
             linkLabel1 = new LinkLabel();
+            totalCount = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewResults).BeginInit();
             SuspendLayout();
             // 
@@ -77,11 +78,21 @@
             linkLabel1.Text = "OPUS Technology Ltd.";
             linkLabel1.LinkClicked += LinkLabel1_LinkClicked;
             // 
+            // totalCount
+            // 
+            totalCount.AutoSize = true;
+            totalCount.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            totalCount.Location = new Point(307, 31);
+            totalCount.Name = "totalCount";
+            totalCount.Size = new Size(0, 19);
+            totalCount.TabIndex = 4;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(749, 615);
+            Controls.Add(totalCount);
             Controls.Add(linkLabel1);
             Controls.Add(dataGridViewResults);
             Controls.Add(btnDownload);
@@ -99,5 +110,6 @@
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.DataGridView dataGridViewResults;
         private LinkLabel linkLabel1;
+        private Label totalCount;
     }
 }
