@@ -46,3 +46,9 @@ To publish the application as a single executable file, follow these steps:
 
 ### Project Overview
 ![Demo Image](https://raw.githubusercontent.com/mehedihasan9339/PasswordGenerator/refs/heads/master/PasswordGenerator/demo.png)
+
+
+
+
+### Excel Format to Upload
+![Demo Image](https://raw.githubusercontent.com/mehedihasan9339/PasswordGenerator/refs/heads/master/PasswordGenerator/excel-format-to-upload.png)
