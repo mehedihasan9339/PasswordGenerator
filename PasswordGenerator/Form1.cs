@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.AspNetCore.Identity;
 using OfficeOpenXml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PasswordGenerator
 {
@@ -28,37 +30,56 @@ namespace PasswordGenerator
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var filePath = openFileDialog.FileName;
-                    _results = await ProcessExcelFile(filePath);
+
+                    // Create a Progress object to update the progress bar
+                    var progress = new Progress<int>(percent =>
+                    {
+                        progressBar.Value = percent; // Update the progress bar
+                    });
+
+                    _results = await ProcessExcelFile(filePath, progress);
                     dataGridViewResults.DataSource = _results;
                 }
             }
         }
 
-        private async Task<List<UserResult>> ProcessExcelFile(string filePath)
+        private async Task<List<UserResult>> ProcessExcelFile(string filePath, IProgress<int> progress)
         {
-            var results = new List<UserResult>();
+            var results = new ConcurrentBag<UserResult>();
 
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
                 var worksheet = package.Workbook.Worksheets[0];
+                int totalRows = worksheet.Dimension.End.Row - 1; // Total rows minus header
 
-                int total = 0;
+                var tasks = new List<Task>();
+
+                totalCount.Text = "Processing...";
+
                 for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
                 {
                     var username = worksheet.Cells[row, 1].Text;
                     var password = worksheet.Cells[row, 2].Text;
 
-                    var hashedPassword = await HashPasswordAsync(password);
-                    results.Add(new UserResult { Username = username, Password = password, HashedPassword = hashedPassword });
+                    tasks.Add(Task.Run(async () =>
+                    {
+                        var hashedPassword = await HashPasswordAsync(password);
+                        results.Add(new UserResult { Username = username, Password = password, HashedPassword = hashedPassword });
 
-                    total++;
+                        // Report progress
+                        int percentComplete = (row - 1) * 100 / totalRows;
+                        progress?.Report(percentComplete);
+                    }));
                 }
 
-                totalCount.Text = "Total Generated: " + total.ToString();
+                await Task.WhenAll(tasks);
+                totalCount.Text = "Total Generated: " + results.Count;
             }
 
-            return results;
+            return results.ToList();
         }
+
+
 
         private async Task<string> HashPasswordAsync(string password)
         {

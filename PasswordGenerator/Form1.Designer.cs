@@ -21,6 +21,7 @@
             dataGridViewResults = new DataGridView();
             linkLabel1 = new LinkLabel();
             totalCount = new Label();
+            progressBar = new ProgressBar(); // Add ProgressBar here
             ((System.ComponentModel.ISupportInitialize)dataGridViewResults).BeginInit();
             SuspendLayout();
             // 
@@ -87,6 +88,15 @@
             totalCount.Size = new Size(0, 19);
             totalCount.TabIndex = 4;
             // 
+            // progressBar
+            // 
+            progressBar.Location = new Point(14, 66); // Position it just above the DataGridView
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(722, 10);
+            progressBar.TabIndex = 5;
+            progressBar.Minimum = 0; // Set the minimum value
+            progressBar.Maximum = 100; // Set the maximum value
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -97,6 +107,7 @@
             Controls.Add(dataGridViewResults);
             Controls.Add(btnDownload);
             Controls.Add(btnUpload);
+            Controls.Add(progressBar); // Add progress bar to controls
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
             Name = "Form1";
@@ -111,5 +122,6 @@
         private System.Windows.Forms.DataGridView dataGridViewResults;
         private LinkLabel linkLabel1;
         private Label totalCount;
+        private ProgressBar progressBar; // Declare the ProgressBar
     }
 }
