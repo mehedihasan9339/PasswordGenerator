@@ -15,13 +15,16 @@
 
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             btnUpload = new Button();
             btnDownload = new Button();
             dataGridViewResults = new DataGridView();
             linkLabel1 = new LinkLabel();
             totalCount = new Label();
-            progressBar = new ProgressBar(); // Add ProgressBar here
+            progressBar = new ProgressBar();
+            labeTime = new Label();
+            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)dataGridViewResults).BeginInit();
             SuspendLayout();
             // 
@@ -90,24 +93,39 @@
             // 
             // progressBar
             // 
-            progressBar.Location = new Point(14, 66); // Position it just above the DataGridView
+            progressBar.Location = new Point(14, 66);
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(722, 10);
             progressBar.TabIndex = 5;
-            progressBar.Minimum = 0; // Set the minimum value
-            progressBar.Maximum = 100; // Set the maximum value
+            // 
+            // labeTime
+            // 
+            labeTime.AutoSize = true;
+            labeTime.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            labeTime.Location = new Point(350, 9);
+            labeTime.Name = "labeTime";
+            labeTime.Size = new Size(72, 21);
+            labeTime.TabIndex = 6;
+            labeTime.Text = "00:00:00";
+            // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Interval = 1000;
+            timer1.Tick += timer1_Tick;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(749, 615);
+            Controls.Add(labeTime);
             Controls.Add(totalCount);
             Controls.Add(linkLabel1);
             Controls.Add(dataGridViewResults);
             Controls.Add(btnDownload);
             Controls.Add(btnUpload);
-            Controls.Add(progressBar); // Add progress bar to controls
+            Controls.Add(progressBar);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
             Name = "Form1";
@@ -123,5 +141,7 @@
         private LinkLabel linkLabel1;
         private Label totalCount;
         private ProgressBar progressBar; // Declare the ProgressBar
+        private Label labeTime;
+        private System.Windows.Forms.Timer timer1;
     }
 }

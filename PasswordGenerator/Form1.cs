@@ -140,5 +140,10 @@ namespace PasswordGenerator
             public string Password { get; set; }
             public string HashedPassword { get; set; }
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            labeTime.Text = DateTime.Now.ToString("HH:MM:ss");
+        }
     }
 }
